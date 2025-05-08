@@ -37,22 +37,22 @@ energy_exponent = np.exp(-(-2.77) / (boltzmann_ev * temperature))
 mass_contribution = (m_CO2 ** 1.5) / ((m_CO ** 1.5) * (m_O2 ** 0.75))
 
 ### Calculate the constant contributions 
-constants_contribution_pressure = 1 / np.sqrt((boltzmann_ev * temperature) / pressure)
-constants_contribution_h = 1 / ((2 * np.pi * boltzmann_ev * temperature) / (h_ev ** 2)) ** (3/4)
-constants_contribution = constants_contribution_pressure * constants_contribution_h
+constants_pressure = ((boltzmann_ev * temperature) / pressure) ** (-0.5)
+constants_h = ((2 * np.pi * boltzmann_ev * temperature) / (h_ev ** 2)) ** (-0.75)
+constants_contribution = constants_pressure * constants_h
 
 ### Calculate the vibrational partition function values for the different species 
 def vibrational_partitions(temperature, h_J, c, boltzmann_J):
     vib_CO2_list = []
     for freq in vib_freq_CO2:
         exponent = (-c * h_J * freq) / (boltzmann_J * temperature)
-        q_vib_CO2 = 1 / (1 - np.exp(exponent))
+        q_vib_CO2 = np.exp(exponent * 0.5) / (1 - np.exp(exponent))
         vib_CO2_list.append(q_vib_CO2)
     return np.prod(vib_CO2_list)
 
 q_vib_CO2 = vibrational_partitions(temperature, h_ev, c, boltzmann_ev)
-q_vib_CO = 1 / (1 - np.exp((-c * h_ev * vib_freq_CO) / (boltzmann_ev * temperature)))
-q_vib_O2 = 1 / (1 - np.exp((-c * h_ev * vib_freq_O2) / (boltzmann_ev * temperature)))
+q_vib_CO = np.exp((-c * 0.5 * h_ev * vib_freq_CO) / (boltzmann_ev * temperature)) / (1 - np.exp((-c * h_ev * vib_freq_CO) / (boltzmann_ev * temperature)))
+q_vib_O2 = np.exp((-c * 0.5 * h_ev * vib_freq_O2) / (boltzmann_ev * temperature)) / (1 - np.exp((-c * h_ev * vib_freq_O2) / (boltzmann_ev * temperature)))
 
 ### Calculate the rotational partition function values for the different species 
 rotational_constant = (2 * boltzmann_ev * temperature) / (h_bar_ev ** 2)
