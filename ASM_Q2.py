@@ -25,8 +25,6 @@ m_CO2 = 7.3068e-26
 
 ### Initial energies (J)
 initial_energy_CO2 = -2.77 * conversion
-initial_energy_CO = 0 
-initial_energy_O2 = 0
 
 ### Partial pressures (Pa)
 p_CO = 6.0e-04
@@ -40,13 +38,13 @@ h_joules = 6.626070e-34             ### J*s
 h_bar_joules = 1.054572e-34         ### J*s
 
 ### Energy exponent 
-energy_exponent = np.exp((-initial_energy_CO2 - initial_energy_CO - (0.5 * initial_energy_O2)) / (boltzmann_joules * temperature))
+energy_exponent = np.exp(-initial_energy_CO2  / (boltzmann_joules * temperature))
 
 ### Calculation of the mass contribution 
 mass_contribution = (m_CO2 / ((m_O2 ** 0.5) * m_CO)) ** (3/2)
 
 ### Calculate the constant contributions 
-constants = ((h_joules ** 3) / ((2 * np.pi ** (3/2)) * (boltzmann_joules * temperature ** (5/2))))** (1/2)
+constants = ((h_joules ** 3) / ((2 * np.pi) ** (3/2)) * ((boltzmann_joules * temperature) ** (5/2))) ** (1/2)
 
 ### Calculate the vibrational partition function values for the different species 
 def vibrational_partitions(temperature, h_joules, c, boltzmann_joules):
