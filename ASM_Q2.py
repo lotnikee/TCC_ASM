@@ -24,7 +24,7 @@ m_CO = 4.6495e-26
 m_CO2 = 7.3068e-26
 
 ### Initial energies (J)
-initial_energy_CO2 = -2.77 * conversion
+energy_CO2 = -2.77 * conversion
 
 ### Partial pressures (Pa)
 p_CO = 6.0e-04
@@ -36,15 +36,20 @@ temperature = 900                   ### K
 c = 2.998e+08                       ### m/s
 h_joules = 6.626070e-34             ### J*s 
 h_bar_joules = 1.054572e-34         ### J*s
+standard_pressure = 101325           ### Pa
 
 ### Energy exponent 
-energy_exponent = np.exp(-initial_energy_CO2  / (boltzmann_joules * temperature))
+energy_exponent = np.exp(-energy_CO2  / (boltzmann_joules * temperature))
 
 ### Calculation of the mass contribution 
 mass_contribution = (m_CO2 / ((m_O2 ** 0.5) * m_CO)) ** (3/2)
 
 ### Calculate the constant contributions 
-constants = ((h_joules ** 3) / ((2 * np.pi) ** (3/2)) * ((boltzmann_joules * temperature) ** (5/2))) ** (1/2)
+constants_numerator = h_joules ** 3
+constants_denominator_1 = (2 * np.pi) ** (3/2)
+constants_denominator_2 = (boltzmann_joules * temperature) ** (5/2)
+constants_denominator = constants_denominator_1 * constants_denominator_2
+constants = (constants_numerator / constants_denominator) ** (1/2)
 
 ### Calculate the vibrational partition function values for the different species 
 def vibrational_partitions(temperature, h_joules, c, boltzmann_joules):
@@ -71,7 +76,7 @@ rot_vib_contribution_denominator = (q_vib_CO * q_rot_CO) * ((q_rot_O2 * q_vib_O2
 rot_vib_contribution = rot_vib_contribution_numerator / rot_vib_contribution_denominator
 
 ### Calculation of the CO2 partial pressure 
-p_CO2 = np.sqrt(constants * mass_contribution * rot_vib_contribution * p_CO * (p_O2 ** 1/2))
+p_CO2 = constants * mass_contribution * rot_vib_contribution * p_CO * (p_O2 ** 0.5) / (standard_pressure ** 0.5)
 
 ### Print calculation values to check if they are correct
 print(f'Energy exponent = {energy_exponent:.5g}')
