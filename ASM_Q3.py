@@ -28,7 +28,7 @@ vib_O2 = 0.3074
 
 ### Rotational partition function values 
 rot_CO2 = 798.39
-rot_CO = 325.44
+rot_CO = 325.45
 rot_O2 = 218.39
 
 ### Vibrational partition function constants (m^-1)
@@ -47,19 +47,19 @@ CO_oxidation_energy = 0.75
 
 ### Define a function to calculate the 2D translational partition function value 
 def trans_2D(species_mass):
-    return ((A * np.pi * species_mass * boltzmann_joules * temperature) / (h_joules ** 2))
+    return ((A * 2 * np.pi * species_mass * boltzmann_joules * temperature) / (h_joules ** 2))
 
 ### Call the different 2D translational values 
 trans_CO = trans_2D(m_CO)
-trans_O2 = trans_2D(m_O2)
-trans_CO2 = trans_2D(m_CO2)
+trans_O2 = 2 * trans_2D(m_O2)
+trans_CO2 = 2 * trans_2D(m_CO2)
 
 ### Define a function for the calculation of the vibrational partition function values for the different species 
 def vibrational_partitions(vib_species, temperature, h_joules, c, boltzmann_joules):
     vib_list = []
     for freq in vib_species:
         exponent = (-c * h_joules * freq) / (boltzmann_joules * temperature)
-        q_vib = np.exp((-0.5 * c * h_joules * freq) / (boltzmann_joules * temperature)) / (1 - np.exp(exponent))
+        q_vib = np.exp(-0.5 * exponent / (1 - np.exp(exponent)))
         vib_list.append(q_vib)
     return np.prod(vib_list)
 
@@ -77,32 +77,32 @@ def CO_ads():
 
 ### Define a function to determine the CO desorption reaction rate
 def CO_des():
-    CO_des_numerator = (boltzmann_joules * temperature) * (vib_CO * rot_CO * trans_CO) * np.exp((CO_adsorption_energy / (boltzmann_joules * temperature)))
-    CO_des_denominator = (h_joules * (vib_CO_surface ** 2))
+    CO_des_numerator = (boltzmann_joules * temperature * vib_CO * rot_CO * trans_CO) * np.exp((CO_adsorption_energy / (boltzmann_joules * temperature)))
+    CO_des_denominator = h_joules * vib_CO_surface
     return CO_des_numerator / CO_des_denominator
 
 ### Define a function to determine the O2 adsorption reaction rate 
 def O2_ads():
-    O2_ads_numerator = (vib_O2_dissociation * 2 * A * P_O2 * np.exp(-O2_transition_energy / (boltzmann_joules * temperature)))
-    O2_ads_denominator = 2 * vib_O2 * rot_O2 * trans_O2 * np.sqrt(2 * np.pi * m_O2 * boltzmann_joules * temperature)
+    O2_ads_numerator = (vib_O2_dissociation * 2 * A * P_O2) * np.exp(-O2_transition_energy / (boltzmann_joules * temperature))
+    O2_ads_denominator = (vib_O2 * rot_O2 * trans_O2) * np.sqrt(2 * np.pi * m_O2 * boltzmann_joules * temperature)
     return O2_ads_numerator / O2_ads_denominator
 
 ### Define a function to determine the O2 desorption reaction rate 
 def O2_des():
-    O2_des_numerator = boltzmann_joules * temperature * vib_O2_dissociation * np.exp((-O2_transition_energy - O2_adsorption_energy) / (boltzmann_joules * temperature))
+    O2_des_numerator = (boltzmann_joules * temperature * vib_O2_dissociation) * np.exp((-O2_transition_energy - O2_adsorption_energy) / (boltzmann_joules * temperature))
     O2_des_denominator = h_joules * (vib_O_surface ** 2)
     return O2_des_numerator / O2_des_denominator
 
 ### Define a function to determine the CO oxidation reaction rate
 def CO_oxi():
-    CO_oxi_numerator = boltzmann_joules * temperature * vib_CO_oxidation * np.exp((-CO_transition_energy) / (boltzmann_joules * temperature))
+    CO_oxi_numerator = (boltzmann_joules * temperature * vib_CO_oxidation) * np.exp((-CO_transition_energy) / (boltzmann_joules * temperature))
     CO_oxi_denominator = h_joules * vib_CO_surface * vib_O_surface
     return CO_oxi_numerator / CO_oxi_denominator
 
 ### Define a function to determine the CO reversed oxidation reaction rate
 def CO_oxi_rev():
-    CO_oxi_rev_numerator = vib_CO_oxidation * 2 * A * P_CO * np.exp((-CO_transition_energy - CO_oxidation_energy) / (boltzmann_joules * temperature))
-    CO_oxi_rev_denominator = 2 * vib_CO2 * rot_CO2 * trans_CO2 * np.sqrt(2 * np.pi * m_CO2 * boltzmann_joules * temperature)
+    CO_oxi_rev_numerator = (vib_CO_oxidation * 2 * A * P_CO) * np.exp((-CO_transition_energy - CO_oxidation_energy) / (boltzmann_joules * temperature))
+    CO_oxi_rev_denominator = (vib_CO2 * rot_CO2 * trans_CO2) * np.sqrt(2 * np.pi * m_CO2 * boltzmann_joules * temperature)
     return CO_oxi_rev_numerator / CO_oxi_rev_denominator
 
 ### Call all the reaction rates 
