@@ -36,8 +36,8 @@ temperature = 900                   ### K
 c = 2.998e+08                       ### m/s
 h_joules = 6.626070e-34             ### J*s 
 h_bar_joules = 1.054572e-34         ### J*s
-standard_pressure = 101325           ### Pa
-pressure = 0.30e+05
+standard_pressure = 101325          ### Pa
+pressure = 0.30e+05                 ### Pa
 
 ### Energy exponent 
 energy_exponent = np.exp(-energy_CO2  / (boltzmann_joules * temperature))
@@ -75,7 +75,7 @@ rot_vib_contribution_denominator = (q_vib_CO * q_rot_CO) * ((q_rot_O2 * q_vib_O2
 rot_vib_contribution = rot_vib_contribution_numerator / rot_vib_contribution_denominator
 
 ### Calculation of the CO2 partial pressure 
-p_CO2 = constants * mass_contribution * rot_vib_contribution * p_CO * (p_O2 ** 0.5) * (pressure / (boltzmann_joules * temperature)) ** 0.5
+p_CO2 = constants * mass_contribution * rot_vib_contribution * p_CO * (p_O2 ** 0.5) * (standard_pressure / (boltzmann_joules * temperature)) ** 0.5
 
 ### Print calculation values to check if they are correct
 print(f'Energy exponent = {energy_exponent:.5g}')
