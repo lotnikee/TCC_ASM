@@ -1,0 +1,136 @@
+mechanism
+
+############################################################################
+step CO_adsorption
+    gas_reacs_prods   CO   -1
+
+    sites             1
+    initial
+        1   *     1
+    final
+        1   CO*   1
+
+    pre_expon         2.48963283e7
+    activ_eng         0.000
+end_step
+
+############################################################################
+step CO_desorption
+    gas_reacs_prods   CO    1
+
+    sites             1
+    initial
+        1   CO*   1
+    final
+        1   *     1
+
+    pre_expon         73.60869608404262
+    activ_eng         2.38
+end_step
+
+############################################################################
+step O2_adsorption
+    gas_reacs_prods   O2   -1
+
+    sites             2
+    neighboring       1-2
+
+    initial
+        1   *     1
+        2   *     1
+    final
+        1   O*    1
+        2   O*    1
+
+    pre_expon         1.47023273e4
+    activ_eng         0.120
+end_step
+
+############################################################################
+step O2_desorption
+    gas_reacs_prods   O2    1
+
+    sites             2
+    neighboring       1-2
+
+    initial
+        1   O*    1
+        2   O*    1
+    final
+        1   *     1
+        2   *     1
+
+    pre_expon         5.00969114578702e18
+    activ_eng         2.16
+end_step
+
+############################################################################
+step CO_oxidation_forward
+    gas_reacs_prods   CO2   1
+
+    sites             2
+    neighboring       1-2
+
+    initial
+        1   CO*   1
+        2   O*    1
+    final
+        1   *     1
+        2   *     1
+
+    pre_expon         1.5685799315430296e6
+    activ_eng         1.230
+end_step
+
+############################################################################
+step CO_oxidation_reverse
+    gas_reacs_prods   CO2   -1
+
+    sites             2
+    neighboring       1-2
+
+    initial
+        1   *     1
+        2   *     1
+    final
+        1   CO*   1
+        2   O*    1
+
+    pre_expon         9.66247153e-6
+    activ_eng         1.98
+end_step
+
+############################################################################
+step CO_diffusion
+    sites             2
+    neighboring       1-2
+
+    initial
+        1   CO*   1
+        2   *     1
+    final
+        1   *     1
+        2   CO*   1
+
+    pre_expon         10.0
+    activ_eng         0.0
+end_step
+
+############################################################################
+step O_diffusion
+    sites             2
+    neighboring       1-2
+
+    initial
+        1   O*    1
+        2   *     1
+    final
+        1   *     1
+        2   O*    1
+
+    pre_expon         10.0
+    activ_eng         0.0
+end_step
+
+############################################################################
+end_mechanism

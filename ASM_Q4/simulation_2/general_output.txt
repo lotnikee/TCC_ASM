@@ -1,0 +1,232 @@
++---------------------------------------------------+
+|  ZACROS 3.03                                      |
+|  GRAPH-THEORETICAL KMC SIMULATION CODE            |
+|                                                   |
+|  Multiscale Computational Catalysis and           |
+|  Materials Science Research Group                 |
+|                                                   |
+|  Michail Stamatakis, Ph.D.                        |
+|  Chemical Engineering Department                  |
+|  University College London                        |
++---------------------------------------------------+
+
+Threading/multiprocessing information:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Serial run (no parallelism).
+
+Simulation setup:
+~~~~~~~~~~~~~~~~~
+
+    Random sequence with seed: 23456
+
+    Temperature: 900.00000000000000
+
+    Pressure: 0.29999999999999999
+
+    Number of gas species: 3
+
+    Gas species names: O2 CO CO2 
+
+    Gas species energies: 0.0000000000000000 0.0000000000000000 -2.7700000000000000 
+
+    Gas species molecular weights: 31.998999999999999 28.011600000000001 44.009500000000003 
+
+    Gas species molar fractions: 4.0000000000000001E-008 2.0000000000000000E-008 0.99999994000000003 
+
+    Number of surface species: 2
+
+    Surface species names: O* CO* 
+
+    Surface species dentation:  1  1
+
+    The first reaction method will be used for propagating the KMC state, with a pairing heap for the event-queue
+
+    Snapshots will be reported in file history_output.txt every 1.0000000000000000 time units
+
+    Process statistics reporting turned off
+
+    Species numbers will be reported in file specnum_output.txt every 1.0000000000000000 time units
+
+    Max simulated time: 500.00000000000000              
+
+    Maximum number of steps: 9223372036854775807 (maximum allowed value)
+
+    Allowed walltime in seconds: 3600
+
+    The default Mersenne Twister 19937 random number generator will be used for this simulation.
+
+    Initializing the random number generator took 4.6000000000000000E-005 seconds
+
+Finished reading simulation input.
+
+Lattice setup:
+~~~~~~~~~~~~~~
+
+    Parsing one of the default lattice structures.
+
+    Unit cell area: 1.0000000000000000
+
+    Unit cell tiling: 40 x 25
+
+    Lattice surface area: 1000.0000000000000
+
+    Number of lattice sites per cell: 1
+
+    Total number of lattice sites: 1000
+
+    Number of site types: 1
+
+    Site type names and total number of sites of that type:
+      StTp1 (1000)
+
+    Maximum coordination number: 4
+
+Finished reading lattice input.
+
+Energetics setup:
+~~~~~~~~~~~~~~~~~
+
+    Number of clusters: 2
+
+    Maximum number of sites involved in a cluster: 1
+
+    Clusters:
+
+        1. CO_point:  Mult = 1      ECI = 0.0000000000000000        Entities:  CO*
+        2. O_point:   Mult = 1      ECI = 0.0000000000000000        Entities:  O*
+
+    This cluster expansion involves only one-site (single-body) patterns.
+
+Finished reading energetics input.
+
+Mechanism setup:
+~~~~~~~~~~~~~~~~
+
+    Number of elementary steps: 8
+
+    Maximum number of sites involved in a step: 2
+
+    Reaction network:
+
+        1. CO_adsorption:           A(Tini) =  1.4938E-01    Ea       =  0.00    k(Tini) =  1.4938E-01    Reaction: CO  +  *(.)  ->  CO*(.)
+        2. CO_desorption:           A(Tini) =  7.3609E+01    Ea       =  2.38    k(Tini) =  3.4636E-12    Reaction: CO*(.)  ->  CO  +  *(.)
+        3. O2_adsorption:           A(Tini) =  1.7643E-04    Ea       =  0.12    k(Tini) =  3.7549E-05    Reaction: O2  +  *(.)  +  *(.)  ->  O*(.)  +  O*(.)
+        4. O2_desorption:           A(Tini) =  5.0097E+18    Ea       =  2.16    k(Tini) =  4.0212E+06    Reaction: O*(.)  +  O*(.)  ->  O2  +  *(.)  +  *(.)
+        5. CO_oxidation_forward:    A(Tini) =  1.5686E+06    Ea       =  1.23    k(Tini) =  2.0315E-01    Reaction: CO*(.)  +  O*(.)  ->  CO2  +  *(.)  +  *(.)
+        6. CO_oxidation_reverse:    A(Tini) =  2.8987E-06    Ea       =  1.98    k(Tini) =  2.3698E-17    Reaction: CO2  +  *(.)  +  *(.)  ->  CO*(.)  +  O*(.)
+        7. CO_diffusion:            A(Tini) =  1.0000E+01    Ea       =  0.00    k(Tini) =  1.0000E+01    Reaction: CO*(.)  +  *(.)  ->  *(.)  +  CO*(.)
+        8. O_diffusion:             A(Tini) =  1.0000E+01    Ea       =  0.00    k(Tini) =  1.0000E+01    Reaction: O*(.)  +  *(.)  ->  *(.)  +  O*(.)
+
+    This mechanism contains up to two-site events involving only monodentate species (all of which have no geometric specifications).
+
+***************
+
+Warning code 4008 from mechanism_parser_module: this mechanism contains irreversible steps. DANGER: IRREVERSIBLE STEPS VIOLATE MICROSCOPIC REVERSIBILITY!
+Moreover, for such steps, Zacros treats the Bronsted-Evans-Polanyi relation as a purely mathematical relation and does not take any action if [activation energy] < max([reaction energy],0). 
+Use irreversible steps in mechanism_input.dat with caution, if you really know what you are doing!
+
+More information: 
+The following steps are irreversible:
+    1 : CO_adsorption
+    2 : CO_desorption
+    3 : O2_adsorption
+    4 : O2_desorption
+    5 : CO_oxidation_forward
+    6 : CO_oxidation_reverse
+    7 : CO_diffusion
+    8 : O_diffusion
+
+***************
+
+***************
+
+Warning code 4009 from mechanism_parser_module: a cached activation energy for an irreversible event is out of the physically meaningful range: [activation energy] >= max(0,[reaction energy]). Check your Bronsted-Evans-Polanyi relation parameters (activation energy at zero coverage and proximity factor) or define the step as reversible, so that appropriate filtering is applied automatically.
+
+More information: 
+Activation energy out of physically meaningful bounds for elementary step 6: CO_oxidation_reverse.
+Ea = 1.9800000000000000, DErxn = 2.7700000000000000.
+
+***************
+
+Finished reading mechanism input.
+
+Preparing simulation:
+~~~~~~~~~~~~~~~~~~~~~
+
+    Constructing requested lattice structure.
+
+        Lattice structure written to lattice_output.txt
+
+    Pre-allocating KMC-simulation-handling datastructures... done!
+
+    Pre-allocating lattice-handling datastructures... done!
+
+    Pre-allocating event-rate-handling datastructures... done!
+
+    Initializing lattice state.
+
+        All lattice sites are vacant.
+
+    Initializing energetics.
+
+        Total adlayer energy: 0.0000000000000000
+
+    Initializing lattice events.
+
+        9000 lattice events found and stored in pairing heap.
+
+Commencing simulation:
+~~~~~~~~~~~~~~~~~~~~~~
+
+Simulation stopped:
+~~~~~~~~~~~~~~~~~~~
+ Current KMC time: 19790144.0
+ Events occurred:  142910
+ Event frequency:  7.22127128E-03
+
+Performance facts:
+~~~~~~~~~~~~~~~~~~
+
+Elapsed CPU time:         0.562700987 seconds
+Elapsed clock time:       0.413352996 seconds
+Setup clock time:         1.93590000E-02 seconds
+Simulation clock time:    0.393994004 seconds
+
+Clock time per KMC event: 2.89240074E-06 seconds
+Clock time per KMC time:  2.08868105E-08 seconds/KMCTimeUnits
+
+Events per clock hour:    1244640768
+KMC Dt per clock hour:    1.72357583E+11 KMCTimeUnits
+
+Execution queue statistics:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Number of insertions:              1408695
+Number of removals:                1407691
+Number of updates:                       0
+
+Memory usage statistics:
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Used capacity of process queue:                    9000
+       ...out of max-allocated:                   50000  (  18.00% utilization )
+
+Used capacity of process-participation list:         17
+       ...out of max-allocated:                     200  (   8.50% utilization )
+
+Used capacity of cluster list:                     1000
+       ...out of max-allocated:                   50000  (   2.00% utilization )
+
+Used capacity of cluster-participation list:          1
+       ...out of max-allocated:                      60  (   1.67% utilization )
+
+Summary of warnings:
+~~~~~~~~~~~~~~~~~~~~
+
+Warning 4008 from mechanism_parser_module was triggered 1 time.                                                                                                   
+Warning 4009 from mechanism_parser_module was triggered 1 time.                                                                                                   
+
+Restart information successfully written in file restart.inf.
+
+> Normal termination <
